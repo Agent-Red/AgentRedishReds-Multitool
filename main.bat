@@ -63,12 +63,12 @@ echo ---------------------------------------------------------------------------
 ::WIP, I will possibly add more options.
 echo  0. Settings (In the config.cmd file now.)
 echo  1. (WIP - DO NOT ENTER THIS ID)
-echo  2. IP tools (WIP)
-echo  3. Open TOR with a specific website
-echo  4. Webcrawler (WIP - DO NOT ENTER THIS ID)
+echo  2. IP tools (WIP -- Am gonna add an IP changer IF I can)
+echo  3. Open TOR with a specific website (You need to include TOR in the folder for this. Pretty useless except for tool 7.
+echo  4. Webcrawler (WIP - DO NOT ENTER THIS ID -- I don't think this will ever work)
 echo  5. Edit Username/Password (WIP - DO NOT ENTER THIS ID)
 echo  6. Bruteforcer (WIP - DO NOT ENTER THIS ID)
-echo  7. Useful websites (WIP)
+echo  7. Useful websites (WIP - DO NOT ENTER THIS ID)
 echo  8. Other (WIP)
 echo  9. Jump to Action ID
 echo 10. Exit
