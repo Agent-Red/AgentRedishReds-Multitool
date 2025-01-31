@@ -13,3 +13,5 @@ In order for the tool to function you mustn’t:
 3. Move files to other folders
 
 If you can questions, requests for tools or anything else, you may contact me at RedishRedsMultitool@outlook.com or ask 
+
+This tool is in its test phase and has an extreme amount of bugs and most tools do not work yet.
