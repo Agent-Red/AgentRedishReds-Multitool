@@ -2,12 +2,12 @@ _**YOU MAY ONLY USE THIS TOOL FOR EDUCATIONAL PURPOSES.**_
 
 This is the version 0.1 of AgentRedishRed’s Multitool.
 
-This Multiool contains an array of diffrent tools for Pentesting and Ethical Hacking. 
+This Multitool contains an array of different tools for Pentesting and Ethical Hacking. 
 
 Included in the download folders are:
 - Two files for the username and password
 
-In order for the tool to function you mustn’t:
+In order for the tool to function you must not:
 1. Change ANY files (Rename)
 2. Edit the tool itself without knowing what you're doing
 3. Move files to other folders
