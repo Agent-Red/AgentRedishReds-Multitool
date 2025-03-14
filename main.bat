@@ -1,66 +1,61 @@
+@echo off
 call Config.cmd
 color %Colour%
 :Start
 cls
-@echo off
 chcp 65001
 mode con lines=25 cols=100
 title Agent Redish Red's Multitool
-if CC == Yes color A
-goto banner
-:banner 
+if %CC% == Yes color A
 
+:banner
 echo.
-echo ███╗   ███╗██╗   ██╗██╗  ████████╗██╗    ████████╗ ██████╗  ██████╗ ██╗     
-echo ████╗ ████║██║   ██║██║  ╚══██╔══╝██║    ╚══██╔══╝██╔═══██╗██╔═══██╗██║     
-echo ██╔████╔██║██║   ██║██║     ██║   ██║       ██║   ██║   ██║██║   ██║██║     
-echo ██║╚██╔╝██║██║   ██║██║     ██║   ██║       ██║   ██║   ██║██║   ██║██║     
+echo ███╗   ███╗██╗   ██╗██╗  ████████╗██╗    ████████╗ ██████╗  ██████╗ ██╗
+echo ████╗ ████║██║   ██║██║  ╚══██╔══╝██║    ╚══██╔══╝██╔═══██╗██╔═══██╗██║
+echo ██╔████╔██║██║   ██║██║     ██║   ██║       ██║   ██║   ██║██║   ██║██║
+echo ██║╚██╔╝██║██║   ██║██║     ██║   ██║       ██║   ██║   ██║██║   ██║██║
 echo ██║ ╚═╝ ██║╚██████╔╝███████╗██║   ██║       ██║   ╚██████╔╝╚██████╔╝███████╗
 echo ╚═╝     ╚═╝ ╚═════╝ ╚══════╝╚═╝   ╚═╝       ╚═╝    ╚═════╝  ╚═════╝ ╚══════╝
 echo.
 
-:: This was the banner. There also is a login based on a .txt file in the .zip file. If you wanna keep this tool secure, you gottta hide the txt file somewhere. Also obfuscate this code.
-:: Using Notepad   for editing this is recommended, it is in the "Multitool Downloads" folder.
-goto login
-:login
-::Login page. If Password/Username entered incorrectly, makes a 1 minute timeout. Easily bypassable though.
 for /f "delims=" %%p in (USRID.txt) do set ID=%%p
 for /f "delims=" %%i in (USRPW.txt) do set PW=%%i
-set /p "USRID=enter Username.: "
-set /p "USRPW=enter Password.: "
-if %USRID% == %ID% if %USRPW% == %PW% goto AN
-echo Password or Username incorrect. You are now on time out for 60 seconds.
-timeout /t 60 /nobreak 
+
+:login
+set /p "USRID=Enter Username: "
+set /p "USRPW=Enter Password: "
+if "%USRID%"=="%ID%" if "%USRPW%"=="%PW%" goto AN
+echo Password or Username incorrect. Timeout for 60 seconds.
+timeout /t 60 /nobreak
 goto login
+
 :AN
-::little Animation;  best I could do. Has an configuration
-cls
 if %AN% == No goto menu
-if CC == Yes color A
-timeout /t 1
-if CC == Yes color B
-timeout /t 1
-if CC == Yes color C
+if %CC% == Yes (
+    for %%c in (A B C) do (
+        color %%c
+        timeout /t 1 >nul
+    )
+)
 cls
 goto menu
-:menu
 
+:menu
 echo.
-echo ███╗   ███╗██╗   ██╗██╗  ████████╗██╗    ████████╗ ██████╗  ██████╗ ██╗     
-echo ████╗ ████║██║   ██║██║  ╚══██╔══╝██║    ╚══██╔══╝██╔═══██╗██╔═══██╗██║     
-echo ██╔████╔██║██║   ██║██║     ██║   ██║       ██║   ██║   ██║██║   ██║██║     
-echo ██║╚██╔╝██║██║   ██║██║     ██║   ██║       ██║   ██║   ██║██║   ██║██║     
+echo ███╗   ███╗██╗   ██╗██╗  ████████╗██╗    ████████╗ ██████╗  ██████╗ ██╗
+echo ████╗ ████║██║   ██║██║  ╚══██╔══╝██║    ╚══██╔══╝██╔═══██╗██╔═══██╗██║
+echo ██╔████╔██║██║   ██║██║     ██║   ██║       ██║   ██║   ██║██║   ██║██║
+echo ██║╚██╔╝██║██║   ██║██║     ██║   ██║       ██║   ██║   ██║██║   ██║██║
 echo ██║ ╚═╝ ██║╚██████╔╝███████╗██║   ██║       ██║   ╚██████╔╝╚██████╔╝███████╗
 echo ╚═╝     ╚═╝ ╚═════╝ ╚══════╝╚═╝   ╚═╝       ╚═╝    ╚═════╝  ╚═════╝ ╚══════╝
 echo.
 
-echo Welcome, %ID%. It is currenly the %date% at %time%.
+echo Welcome, %ID%. It is currently the %date% at %time%.
 echo ---------------------------------------------------------------------------------
 echo Note that this tool is still largely work in progress.
 echo ---------------------------------------------------------------------------------
 echo You have a list of actions you may use. Simply type in the action ID and hit enter.
 echo ---------------------------------------------------------------------------------
-::WIP, I will possibly add more options.
 echo  0. Settings (In the config.cmd file now.)
 echo  1. (WIP - DO NOT ENTER THIS ID)
 echo  2. IP tools (WIP -- Am gonna add an IP changer IF I can)
@@ -72,26 +67,24 @@ echo  7. Useful websites (WIP - DO NOT ENTER THIS ID)
 echo  8. Other (WIP)
 echo  9. Jump to Action ID
 echo 10. Exit
-set /p "AID=enter Action ID : "
+set /p "AID=Enter Action ID: "
 cls
-Title Agent Redish Red's Multitool - Currently using: Tool #%AID%
+title Agent Redish Red's Multitool - Currently using: Tool #%AID%
 echo Welcome to tool #%AID%
 goto %AID%
 
 :0
-
 echo.
-echo ███╗   ███╗██╗   ██╗██╗  ████████╗██╗    ████████╗ ██████╗  ██████╗ ██╗     
-echo ████╗ ████║██║   ██║██║  ╚══██╔══╝██║    ╚══██╔══╝██╔═══██╗██╔═══██╗██║     
-echo ██╔████╔██║██║   ██║██║     ██║   ██║       ██║   ██║   ██║██║   ██║██║     
-echo ██║╚██╔╝██║██║   ██║██║     ██║   ██║       ██║   ██║   ██║██║   ██║██║     
+echo ███╗   ███╗██╗   ██╗██╗  ████████╗██╗    ████████╗ ██████╗  ██████╗ ██╗
+echo ████╗ ████║██║   ██║██║  ╚══██╔══╝██║    ╚══██╔══╝██╔═══██╗██╔═══██╗██║
+echo ██╔████╔██║██║   ██║██║     ██║   ██║       ██║   ██║   ██║██║   ██║██║
+echo ██║╚██╔╝██║██║   ██║██║     ██║   ██║       ██║   ██║   ██║██║   ██║██║
 echo ██║ ╚═╝ ██║╚██████╔╝███████╗██║   ██║       ██║   ╚██████╔╝╚██████╔╝███████╗
 echo ╚═╝     ╚═╝ ╚═════╝ ╚══════╝╚═╝   ╚═╝       ╚═╝    ╚═════╝  ╚═════╝ ╚══════╝
 echo.
 
 echo These are the settings.
-:: (wow)
-echo Type in a Action ID you wanna edit and hit enter.
+echo Type in an Action ID you wanna edit and hit enter.
 echo.
 echo 0.1 Easter eggs (There are none until yet)
 echo 0.2 Animations
@@ -101,178 +94,113 @@ echo 0.5 Ask before exit of program [has bugs]
 echo 0.6 Main Colour
 echo --------------------------------------------------------------------------
 echo 0.7 Back to main page
-set /p "AID=enter Action ID : "
+set /p "AID=Enter Action ID: "
 cls
-Title Agent Redish Red's Multitool - Currently using: Tool #%AID%
+title Agent Redish Red's Multitool - Currently using: Tool #%AID%
 goto %AID%
 
-:0.1 
-set /p "EG=Yes/No : "
-if %EG% == Yes goto 0
-if %EG% == No goto 0
+:0.1 :0.2 :0.3 :0.5 :0.6
+set /p "VALUE=Yes/No: "
+if "%VALUE%"=="Yes" goto 0
+if "%VALUE%"=="No" goto 0
 echo Invalid value. Only use Yes/No.
-cls 
-goto %AID%
-
-:0.2
-set /p "AN=Yes/No : "
-if %AN% == Yes goto 0
-if %AN% == No goto 0
-echo Invalid value. Only use Yes/No.
-cls 
-goto %AID%
-
-:0.3
-set /p "BANN=Yes/No : "
-if %BANN% == Yes goto 0
-if %BANN% == No goto 0
-echo Invalid value. Only use Yes/No.
-cls 
+cls
 goto %AID%
 
 :0.4
-set /p "L=Line size : "
-set /p "C=Cols : "
-mode con Lines=%L% cols=%C%
-
-:0.5 
-set /p "ABE=Yes/No : "
-if %ABE% == Yes goto 0
-if %ABE% == No goto 0
-echo Invalid value. Only use Yes/No.
-cls 
-goto %AID%
-
-:0.6
-set /p "COL=Enter Colour value (1-9;A-F) : "
-set CC=No
-set Colour=%Yes%
-color %COL%
-
+set /p "L=Line size: "
+set /p "C=Cols: "
+mode con lines=%L% cols=%C%
+goto 0
 
 :0.7
 goto AN
 pause
 
 :1
-
 echo.
-echo ███╗   ███╗██╗   ██╗██╗  ████████╗██╗    ████████╗ ██████╗  ██████╗ ██╗     
-echo ████╗ ████║██║   ██║██║  ╚══██╔══╝██║    ╚══██╔══╝██╔═══██╗██╔═══██╗██║     
-echo ██╔████╔██║██║   ██║██║     ██║   ██║       ██║   ██║   ██║██║   ██║██║     
-echo ██║╚██╔╝██║██║   ██║██║     ██║   ██║       ██║   ██║   ██║██║   ██║██║     
+echo ███╗   ███╗██╗   ██╗██╗  ████████╗██╗    ████████╗ ██████╗  ██████╗ ██╗
+echo ████╗ ████║██║   ██║██║  ╚══██╔══╝██║    ╚══██╔══╝██╔═══██╗██╔═══██╗██║
+echo ██╔████╔██║██║   ██║██║     ██║   ██║       ██║   ██║   ██║██║   ██║██║
+echo ██║╚██╔╝██║██║   ██║██║     ██║   ██║       ██║   ██║   ██║██║   ██║██║
 echo ██║ ╚═╝ ██║╚██████╔╝███████╗██║   ██║       ██║   ╚██████╔╝╚██████╔╝███████╗
 echo ╚═╝     ╚═╝ ╚═════╝ ╚══════╝╚═╝   ╚═╝       ╚═╝    ╚═════╝  ╚═════╝ ╚══════╝
 echo.
 
-if CC == Yes color D
+if %CC% == Yes color D
 cls
-echo Usage of this tool is only premitted for educational purposes. You may only use this on your own computer or on a computer you have premission to use it on. I, the creator of this tool do NOT carry any legal responsibility for your actions, neither do I recommend or endurse illegal actions.
+echo Usage of this tool is only permitted for educational purposes. You may only use this on your own computer or on a computer you have permission to use it on. I, the creator of this tool do NOT carry any legal responsibility for your actions, neither do I recommend or endorse illegal actions.
 echo Also, note that this tool is not capable of taking down basically anything, as you would need to do something else first, which I will not tell.
-set /p "IP=enter Target IP. : "
+set /p "IP=Enter Target IP: "
 echo ATTACK WILL START IN FIVE (5) SECONDS. YOUR LAST CHANCE IS TO CLOSE THIS WINDOW.
 timeout /t 5
-start cmd /K ping %IP% -t -l 6500 
-start cmd /K ping %IP% -t -l 6500
-start cmd /K ping %IP% -t -l 6500
-start cmd /K ping %IP% -t -l 6500
-start cmd /K ping %IP% -t -l 6500
-start cmd /K ping %IP% -t -l 6500
-start cmd /K ping %IP% -t -l 6500
-start cmd /K ping %IP% -t -l 6500
-start cmd /K ping %IP% -t -l 6500
-start cmd /K ping %IP% -t -l 6500
-start cmd /K ping %IP% -t -l 6500
+for /L %%i in (1,1,10) do start cmd /K ping %IP% -t -l 6500
 goto menu
 
 :2
-
 echo.
-echo ███╗   ███╗██╗   ██╗██╗  ████████╗██╗    ████████╗ ██████╗  ██████╗ ██╗     
-echo ████╗ ████║██║   ██║██║  ╚══██╔══╝██║    ╚══██╔══╝██╔═══██╗██╔═══██╗██║     
-echo ██╔████╔██║██║   ██║██║     ██║   ██║       ██║   ██║   ██║██║   ██║██║     
-echo ██║╚██╔╝██║██║   ██║██║     ██║   ██║       ██║   ██║   ██║██║   ██║██║     
+echo ███╗   ███╗██╗   ██╗██╗  ████████╗██╗    ████████╗ ██████╗  ██████╗ ██╗
+echo ████╗ ████║██║   ██║██║  ╚══██╔══╝██║    ╚══██╔══╝██╔═══██╗██╔═══██╗██║
+echo ██╔████╔██║██║   ██║██║     ██║   ██║       ██║   ██║   ██║██║   ██║██║
+echo ██║╚██╔╝██║██║   ██║██║     ██║   ██║       ██║   ██║   ██║██║   ██║██║
 echo ██║ ╚═╝ ██║╚██████╔╝███████╗██║   ██║       ██║   ╚██████╔╝╚██████╔╝███████╗
 echo ╚═╝     ╚═╝ ╚═════╝ ╚══════╝╚═╝   ╚═╝       ╚═╝    ╚═════╝  ╚═════╝ ╚══════╝
 echo.
 
 cls
-if CC == Yes color E
+if %CC% == Yes color E
 echo These are the IP tools.
 echo Illegal use of following tools may be punishable by law.
 echo I do not hold ANY responsibility for your actions.
-echo enter Action ID and press enter.
-echo. 
+echo Enter Action ID and press enter.
+echo.
 echo 2.1 Tools about my IP and internet
 echo 2.2 Other's IP
 echo --------------------------------------------------------------------------
 echo 0.7 Back to menu
-set /p "AID=enter Action ID. : "
+set /p "AID=Enter Action ID: "
 cls
-Title Agent Redish Red's Multitool - Currently using: Tool #%AID%
+title Agent Redish Red's Multitool - Currently using: Tool #%AID%
 goto %AID%
 
 :2.1
-echo These are the tools for your IP. 
-echo enter Action ID and press enter.
-echo .
+echo These are the tools for your IP.
+echo Enter Action ID and press enter.
+echo.
 echo 2.1.1 What is my IP? (Public)
 echo 2.1.2 Do I have internet?
 echo 2.1.3 Ping my IP
 echo --------------------------------------------------------------------------
 echo 0.7 Back to menu
 echo 2.3 Back to IP tools menu
-set /p "AID=enter Action ID. : "
+set /p "AID=Enter Action ID: "
 cls
-Title Agent Redish Red's Multitool - Currently using: Tool #%AID%
+title Agent Redish Red's Multitool - Currently using: Tool #%AID%
 goto %AID%
 
-
-:2.1.1
-for /f "tokens=1* delims=: " %%A in (
-  'nslookup myip.opendns.com. resolver1.opendns.com 2^>NUL^|find "Address:"'
-) Do set ExtIP=%%B
-Echo Public IP is : %ExtIP%
+:2.1.1 :2.1.2 :2.1.3
+for /f "tokens=1* delims=: " %%A in ('nslookup myip.opendns.com. resolver1.opendns.com 2^>NUL^|find "Address:"') do set ExtIP=%%B
+if "%AID%"=="2.1.1" (
+    echo Public IP is: %ExtIP%
+) else if "%AID%"=="2.1.2" (
+    ping %ExtIP%
+    echo INTERNET CONNECTION PRESENT?
+    if %errorlevel% == 0 echo Yes
+    if %errorlevel% == 1 echo No
+) else if "%AID%"=="2.1.3" (
+    ping %ExtIP%
+)
 echo --------------------------------------------------------------------------
 echo 0.7 Back to menu
 echo 2.3 Back to IP tools menu
-set /p "AID=enter Action ID. : "
+set /p "AID=Enter Action ID: "
 cls
-Title Agent Redish Red's Multitool - Currently using: Tool #%AID%
+title Agent Redish Red's Multitool - Currently using: Tool #%AID%
 goto %AID%
 
-:2.1.2
-for /f "tokens=1* delims=: " %%A in (
-  'nslookup myip.opendns.com. resolver1.opendns.com 2^>NUL^|find "Address:"'
-) Do set ExtIP=%%B
-ping %ExtIP%
-echo INTERNET CONNECTION PRESENT?
-if %errorlevel% == 0 echo Yes
-if %errorlevel% == 1 echo No
-echo --------------------------------------------------------------------------
-echo 0.7 Back to menu
-echo 2.3 Back to IP tools menu
-set /p "AID=enter Action ID. : "
-cls
-Title Agent Redish Red's Multitool - Currently using: Tool #%AID%
-goto %AID%
-
-:2.1.3
-for /f "tokens=1* delims=: " %%A in (
-  'nslookup myip.opendns.com. resolver1.opendns.com 2^>NUL^|find "Address:"'
-) Do set ExtIP=%%B
-ping %ExtIP%
-echo --------------------------------------------------------------------------
-echo 0.7 Back to menu
-echo 2.3 Back to IP tools menu
-set /p "AID=enter Action ID. : "
-cls
-Title Agent Redish Red's Multitool - Currently using: Tool #%AID%
-goto %AID%
-
-:2.2 
-echo Those are the tools for others IPs.
-if %TIP% ==0 set /p "TIP=enter Target IP. : "
+:2.2
+echo These are the tools for others' IPs.
+if %TIP% ==0 set /p "TIP=Enter Target IP: "
 echo Type in an Action ID and then hit enter.
 echo This is still work in progress.
 echo Also, note that entering a wrong IP will make the tool crash.
@@ -282,9 +210,9 @@ echo 2.2.2 Ping target IP
 echo --------------------------------------------------------------------------
 echo 0.7 Back to menu
 echo 2.3 Back to IP tools menu
-set /p "AID=enter Action ID. : "
+set /p "AID=Enter Action ID: "
 cls
-Title Agent Redish Red's Multitool - Currently using: Tool #%AID%
+title Agent Redish Red's Multitool - Currently using: Tool #%AID%
 goto %AID%
 
 :2.2.1
@@ -294,79 +222,68 @@ goto 2.2
 :2.2.2
 ping %TIP%
 echo Redirecting back in 5 seconds.
+timeout /t 5
 goto 2.2
 
 :9
-set /p "AID=Enter Action ID"
+set /p "AID=Enter Action ID: "
 cls
-Title Agent Redish Red's Multitool - Currently using: Tool #%AID%
+title Agent Redish Red's Multitool - Currently using: Tool #%AID%
 goto %AID%
 
 :10
 if %ABE% == Yes (
-Exit
+    exit
 ) else if %ABE% == No (
-set /p "EX=Are you sure you wanna exit? (Y/N)"
-if EX == Y (
-exit
-) else if EX == N (
-goto menu
+    set /p "EX=Are you sure you wanna exit? (Y/N): "
+    if "%EX%"=="Y" (
+        exit
+    ) else if "%EX%"=="N" (
+        goto menu
+    )
 )
-
-echo incorrect value entered. Try again.
+echo Incorrect value entered. Try again.
 goto 10
 
 :3
-
 echo.
-echo ███╗   ███╗██╗   ██╗██╗  ████████╗██╗    ████████╗ ██████╗  ██████╗ ██╗     
-echo ████╗ ████║██║   ██║██║  ╚══██╔══╝██║    ╚══██╔══╝██╔═══██╗██╔═══██╗██║     
-echo ██╔████╔██║██║   ██║██║     ██║   ██║       ██║   ██║   ██║██║   ██║██║     
-echo ██║╚██╔╝██║██║   ██║██║     ██║   ██║       ██║   ██║   ██║██║   ██║██║     
+echo ███╗   ███╗██╗   ██╗██╗  ████████╗██╗    ████████╗ ██████╗  ██████╗ ██╗
+echo ████╗ ████║██║   ██║██║  ╚══██╔══╝██║    ╚══██╔══╝██╔═══██╗██╔═══██╗██║
+echo ██╔████╔██║██║   ██║██║     ██║   ██║       ██║   ██║   ██║██║   ██║██║
+echo ██║╚██╔╝██║██║   ██║██║     ██║   ██║       ██║   ██║   ██║██║   ██║██║
 echo ██║ ╚═╝ ██║╚██████╔╝███████╗██║   ██║       ██║   ╚██████╔╝╚██████╔╝███████╗
 echo ╚═╝     ╚═╝ ╚═════╝ ╚══════╝╚═╝   ╚═╝       ╚═╝    ╚═════╝  ╚═════╝ ╚══════╝
 echo.
 
-set /p "WEBS=Enter website you wanna enter. : "
-start "test.com" "C:\Users\%USERNAME%\Desktop\ARR-Multitool\Tor Browser\Browser\firefox.exe" "
+set /p "WEBS=Enter website you wanna enter: "
+start "test.com" "C:\Users\%USERNAME%\Desktop\ARR-Multitool\Tor Browser\Browser\firefox.exe" "%WEBS%"
 cls
 title Redirecting..
-timeout -t 1
+timeout /t 1
 cls
 goto menu
 
 :4
-
 echo.
-echo ███╗   ███╗██╗   ██╗██╗  ████████╗██╗    ████████╗ ██████╗  ██████╗ ██╗     
-echo ████╗ ████║██║   ██║██║  ╚══██╔══╝██║    ╚══██╔══╝██╔═══██╗██╔═══██╗██║     
-echo ██╔████╔██║██║   ██║██║     ██║   ██║       ██║   ██║   ██║██║   ██║██║     
-echo ██║╚██╔╝██║██║   ██║██║     ██║   ██║       ██║   ██║   ██║██║   ██║██║     
+echo ███╗   ███╗██╗   ██╗██╗  ████████╗██╗    ████████╗ ██████╗  ██████╗ ██╗
+echo ████╗ ████║██║   ██║██║  ╚══██╔══╝██║    ╚══██╔══╝██╔═══██╗██╔═══██╗██║
+echo ██╔████╔██║██║   ██║██║     ██║   ██║       ██║   ██║   ██║██║   ██║██║
+echo ██║╚██╔╝██║██║   ██║██║     ██║   ██║       ██║   ██║   ██║██║   ██║██║
 echo ██║ ╚═╝ ██║╚██████╔╝███████╗██║   ██║       ██║   ╚██████╔╝╚██████╔╝███████╗
 echo ╚═╝     ╚═╝ ╚═════╝ ╚══════╝╚═╝   ╚═╝       ╚═╝    ╚═════╝  ╚═════╝ ╚══════╝
 echo.
 
 echo This tool is work in progress. [Note that creation of this tool may take a while, or never even occur.]
-timeout -t 3
+timeout /t 3
 goto menu
-
-:: mini-menu setup:
-echo --------------------------------------------------------------------------
-echo 0.7 Back to menu
-echo 2.3 Back to IP tools menu
-set /p "AID=enter Action ID. : "
-cls
-Title Agent Redish Red's Multitool - Currently using: Tool #%AID%
-goto %AID%
-::
 
 :5
 set ULI=0
 echo.
-echo ███╗   ███╗██╗   ██╗██╗  ████████╗██╗    ████████╗ ██████╗  ██████╗ ██╗     
-echo ████╗ ████║██║   ██║██║  ╚══██╔══╝██║    ╚══██╔══╝██╔═══██╗██╔═══██╗██║     
-echo ██╔████╔██║██║   ██║██║     ██║   ██║       ██║   ██║   ██║██║   ██║██║     
-echo ██║╚██╔╝██║██║   ██║██║     ██║   ██║       ██║   ██║   ██║██║   ██║██║     
+echo ███╗   ███╗██╗   ██╗██╗  ████████╗██╗    ████████╗ ██████╗  ██████╗ ██╗
+echo ████╗ ████║██║   ██║██║  ╚══██╔══╝██║    ╚══██╔══╝██╔═══██╗██╔═══██╗██║
+echo ██╔████╔██║██║   ██║██║     ██║   ██║       ██║   ██║   ██║██║   ██║██║
+echo ██║╚██╔╝██║██║   ██║██║     ██║   ██║       ██║   ██║   ██║██║   ██║██║
 echo ██║ ╚═╝ ██║╚██████╔╝███████╗██║   ██║       ██║   ╚██████╔╝╚██████╔╝███████╗
 echo ╚═╝     ╚═╝ ╚═════╝ ╚══════╝╚═╝   ╚═╝       ╚═╝    ╚═════╝  ╚═════╝ ╚══════╝
 echo.
@@ -379,59 +296,50 @@ echo 5.4 View default Password
 echo 5.5 Reset Username and Password to default
 echo --------------------------------------------------------------------------
 echo 0.7 Back to menu
-set /p "AID=enter Action ID. : "
+set /p "AID=Enter Action ID: "
 cls
-Title Agent Redish Red's Multitool - Currently using: Tool #%AID%
+title Agent Redish Red's Multitool - Currently using: Tool #%AID%
 goto %AID%
 
 :5.1
-
 echo Your current Username is: %ID%
 echo Your current Password is: %PW%
 echo --------------------------------------------------------------------------
 echo 0.7 Back to menu
 echo 5.6 Back to Username/Password menu
-set /p "AID=enter Action ID. : "
+set /p "AID=Enter Action ID: "
 cls
-Title Agent Redish Red's Multitool - Currently using: Tool #%AID%
+title Agent Redish Red's Multitool - Currently using: Tool #%AID%
 goto %AID%
 
-:5.2
-set AID=5.2
+:5.2 :5.3 :5.5
 echo This action requires Log-in.
 if %ULI% == 1 (
-set /p CID=Enter desired new Username.
-fart.exe USRID.txt %ID% %CID%
-set ULI=0
-echo Username succesfully changed.
-)
-if %ULI% == 0 (
-goto Login-T5
+    if "%AID%"=="5.2" (
+        set /p CID=Enter desired new Username:
+        fart.exe USRID.txt %ID% %CID%
+        set ULI=0
+        echo Username successfully changed.
+    ) else if "%AID%"=="5.3" (
+        set /p CPW=Enter desired new Password:
+        fart.exe USRPW.txt %PW% %CPW%
+        set ULI=0
+        echo Password successfully changed.
+    ) else if "%AID%"=="5.5" (
+        fart.exe USRPW.txt %PW% P
+        fart.exe USRID.txt %ID% U
+        set ULI=0
+        echo Username and password successfully reset to default.
+    )
+) else (
+    goto Login-T5
 )
 echo --------------------------------------------------------------------------
 echo 0.7 Back to menu
 echo 5.6 Back to Username/Password menu
-set /p "AID=enter Action ID. : "
+set /p "AID=Enter Action ID: "
 cls
-Title Agent Redish Red's Multitool - Currently using: Tool #%AID%
-goto %AID%
-
-:5.3
-echo This action requires Log-in.
-if %ULI% == 1 (
-set /p CPW=Enter desired new Username.
-fart.exe USRPW.txt %PW% %CPW%
-set ULI=0
-echo Password succesfully changed.
-) else if ULI=0 (
-goto Login-T5
-)
-echo --------------------------------------------------------------------------
-echo 0.7 Back to menu
-echo 5.6 Back to Username/Password menu
-set /p "AID=enter Action ID. : "
-cls
-Title Agent Redish Red's Multitool - Currently using: Tool #%AID%
+title Agent Redish Red's Multitool - Currently using: Tool #%AID%
 goto %AID%
 
 :5.4
@@ -440,50 +348,33 @@ echo Default Password: P
 echo --------------------------------------------------------------------------
 echo 0.7 Back to menu
 echo 5.6 Back to Username/Password menu
-set /p "AID=enter Action ID. : "
+set /p "AID=Enter Action ID: "
 cls
-Title Agent Redish Red's Multitool - Currently using: Tool #%AID%
-goto %AID%
-
-:5.5
-echo This action requires Log-in.
-if %ULI% == 1 (
-fart.exe USRPW.txt %PW% P
-fart.exe USRID.txt %ID% U
-set ULI=0
-echo Username and password succesfully reseted to default.
-) else if ULI=0 (
-goto Login-T5
-)
-echo --------------------------------------------------------------------------
-echo 0.7 Back to menu
-echo 5.6 Back to Username/Password menu
-set /p "AID=enter Action ID. : "
-cls
-Title Agent Redish Red's Multitool - Currently using: Tool #%AID%
+title Agent Redish Red's Multitool - Currently using: Tool #%AID%
 goto %AID%
 
 :5.6
-cls 
+cls
 goto 5
 
 :Login-T5
-set /p "USRID=enter Username.: "
-set /p "USRPW=enter Password.: "
-if %USRID% == %ID% if %USRPW% == %PW% (
-set ULI=1
-goto %AID%
+set /p "USRID=Enter Username: "
+set /p "USRPW=Enter Password: "
+if "%USRID%"=="%ID%" if "%USRPW%"=="%PW%" (
+    set ULI=1
+    goto %AID%
 )
 echo Password or Username incorrect. You are now on time out for 60 seconds.
 timeout /t 60 /nobreak
 goto Login-T5
+
 :8
 cls
 echo.
-echo ███╗   ███╗██╗   ██╗██╗  ████████╗██╗    ████████╗ ██████╗  ██████╗ ██╗     
-echo ████╗ ████║██║   ██║██║  ╚══██╔══╝██║    ╚══██╔══╝██╔═══██╗██╔═══██╗██║     
-echo ██╔████╔██║██║   ██║██║     ██║   ██║       ██║   ██║   ██║██║   ██║██║     
-echo ██║╚██╔╝██║██║   ██║██║     ██║   ██║       ██║   ██║   ██║██║   ██║██║     
+echo ███╗   ███╗██╗   ██╗██╗  ████████╗██╗    ████████╗ ██████╗  ██████╗ ██╗
+echo ████╗ ████║██║   ██║██║  ╚══██╔══╝██║    ╚══██╔══╝██╔═══██╗██╔═══██╗██║
+echo ██╔████╔██║██║   ██║██║     ██║   ██║       ██║   ██║   ██║██║   ██║██║
+echo ██║╚██╔╝██║██║   ██║██║     ██║   ██║       ██║   ██║   ██║██║   ██║██║
 echo ██║ ╚═╝ ██║╚██████╔╝███████╗██║   ██║       ██║   ╚██████╔╝╚██████╔╝███████╗
 echo ╚═╝     ╚═╝ ╚═════╝ ╚══════╝╚═╝   ╚═╝       ╚═╝    ╚═════╝  ╚═════╝ ╚══════╝
 echo.
@@ -494,19 +385,19 @@ echo Note that this menu was based upon the Auxiliary multitool. However, all th
 echo -------------------------------------------------------------------------
 echo 8.1 View system info
 echo 8.2 View all netstats
-echo 8.3 Shutdown 
+echo 8.3 Shutdown
 echo 8.4 Log off
 echo 8.5 Open cmd
 echo 8.6 Open TOR
 echo 8.7 View Network
 echo 8.8 Start WAOM (Windows Advanced Options Menu)
-echo 8.9 Start Task Mananger
-echo 8.10 Start other programs 
+echo 8.9 Start Task Manager
+echo 8.10 Start other programs
 echo --------------------------------------------------------------------------
 echo 0.7 Back to menu
-set /p "AID=enter Action ID. : "
+set /p "AID=Enter Action ID: "
 cls
-Title Agent Redish Red's Multitool - Currently using: Tool #%AID%
+title Agent Redish Red's Multitool - Currently using: Tool #%AID%
 goto %AID%
 
 :8.1
@@ -516,9 +407,9 @@ systeminfo
 echo --------------------------------------------------------------------------
 echo 0.7 Back to menu
 echo 8.11 Back to "Other Menu"/Page 2
-set /p "AID=enter Action ID. : "
+set /p "AID=Enter Action ID: "
 cls
-Title Agent Redish Red's Multitool - Currently using: Tool #%AID%
+title Agent Redish Red's Multitool - Currently using: Tool #%AID%
 goto %AID%
 
 :8.2
@@ -528,9 +419,9 @@ netstat
 echo --------------------------------------------------------------------------
 echo 0.7 Back to menu
 echo 8.11 Back to "Other Menu"/Page 2
-set /p "AID=enter Action ID. : "
+set /p "AID=Enter Action ID: "
 cls
-Title Agent Redish Red's Multitool - Currently using: Tool #%AID%
+title Agent Redish Red's Multitool - Currently using: Tool #%AID%
 goto %AID%
 
 :8.3
@@ -538,12 +429,15 @@ shutdown /s /f /t 0
 
 :8.4
 shutdown /l
+
 :8.5
 start
 goto 8
+
 :8.6
-start "" "C:\Users\%USERNAME%\Desktop\ARR-Multitool\Tor Browser\Browser\firefox.exe" "
+start "" "C:\Users\%USERNAME%\Desktop\ARR-Multitool\Tor Browser\Browser\firefox.exe"
 goto 8
+
 :8.7
 cls
 echo Welcome to your network
@@ -551,9 +445,9 @@ arp -a
 echo --------------------------------------------------------------------------
 echo 0.7 Back to menu
 echo 8.11 Back to "Other Menu"/Page 2
-set /p "AID=enter Action ID. : "
+set /p "AID%=Enter Action ID: "
 cls
-Title Agent Redish Red's Multitool - Currently using: Tool #%AID%
+title Agent Redish Red's Multitool - Currently using: Tool #%AID%
 goto %AID%
 
 :8.9
@@ -563,22 +457,23 @@ tree /f /a
 echo --------------------------------------------------------------------------
 echo 0.7 Back to menu
 echo 8.11 Back to "Other Menu"/Page 2
-set /p "AID=enter Action ID. : "
+set /p "AID=Enter Action ID: "
 cls
-Title Agent Redish Red's Multitool - Currently using: Tool #%AID%
+title Agent Redish Red's Multitool - Currently using: Tool #%AID%
 goto %AID%
 
 :8.10
 cls
 echo Welcome to program opener. This tool will require either a file path or the file name (eg firefox.exe)
-set / "PRGRM=Enter Program name/path."
+set /p "PRGRM=Enter Program name/path: "
 start %PRGRM%
 echo --------------------------------------------------------------------------
 echo 0.7 Back to menu
 echo 8.11 Back to "Other Menu"/Page 2
-set /p "AID=enter Action ID. : "
+set /p "AID=Enter Action ID: "
 cls
-Title Agent Redish Red's Multitool - Currently using: Tool #%AID%
+title Agent Redish Red's Multitool - Currently using: Tool #%AID%
 goto %AID%
+
 :8.11
 goto 8
